@@ -29,6 +29,6 @@ Route::delete('quotes/{quote}', 'QuoteController@destroy')->middleware('jwt.auth
 
 Route::post('/users/signup', 'UserController@singup');
 Route::post('/users/signin', 'ParentController@signin');
-Route::post('notes/getNotes','NoteController@getNotes');
+Route::post('notes/getNotes','MatiereController@getNotes');
 Route::post('parent/get','ParentController@geteleves');
 Route::post('users/getInformation','UserController@setInformation');

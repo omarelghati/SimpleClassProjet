@@ -7,7 +7,7 @@ class Eleve extends Model{
         return $this->belongsTo('App\Parents');
     }
 
-    public function classe() {
-        return $this->belongsTo("App\Classe");
+    public function matieres() {
+        return $this->belongsToMany("App\Matiere")->withPivot('note');
     }
 }

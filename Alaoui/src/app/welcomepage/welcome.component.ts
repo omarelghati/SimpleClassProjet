@@ -40,14 +40,6 @@ import {WelcomeContent} from './welcomeContent.component';
         WelcomeComponent.eleves.push(a);
      }
      ngOnInit() {  
-       
-          
-        //  this.eleves=
-           
-      // this._requestService.getIt("Mehdi").subscribe(
-      //       response => console.log(response),
-      //       error => console.log(error)
-      //     );
      } 
      setNotes(a) {
        this.childNotes.push(a);
@@ -70,12 +62,10 @@ import {WelcomeContent} from './welcomeContent.component';
                   var length = Object.keys(note).length;
                   for(var i=0;i<length;i++) {
                     this.setNotes(note[i]); 
+                    console.log(note[i]);
                     }
   				error => console.log(error)}
   			);
-    // console.log(x+" de "+y);
-    // this._requestService.getParent(y).subscribe(response =>console.log(response));
-    // console.log(this.eleves[0].id);
     }
 
   }
