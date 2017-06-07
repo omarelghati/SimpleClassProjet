@@ -1,0 +1,30 @@
+<div class="container" > 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="wrap">
+                <p class="form-title">
+                    Sign In</p>
+                    <br>
+                <form id="login" class="login" #f="ngForm" (ngSubmit)="onSignin(f)">
+                <input name="username" type="text" placeholder="Username" ngModel/>
+                <input name="password" type="password" placeholder="Password" ngModel/>
+                <input type="submit" value="Sign In" class="btn btn-success btn-sm"  />
+                <div class="remember-forgot">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" />
+                                    Remember Me
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 forgot-pass-content">
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
