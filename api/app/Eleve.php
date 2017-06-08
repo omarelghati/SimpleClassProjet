@@ -10,4 +10,7 @@ class Eleve extends Model{
     public function matieres() {
         return $this->belongsToMany("App\Matiere")->withPivot('note');
     }
+    public function absences(){
+        return $this->hasMany("App\Absence");
+    }
 }

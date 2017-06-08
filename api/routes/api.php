@@ -32,3 +32,4 @@ Route::post('/users/signin', 'ParentController@signin');
 Route::post('notes/getNotes','MatiereController@getNotes');
 Route::post('parent/get','ParentController@geteleves');
 Route::post('users/getInformation','UserController@setInformation');
+Route::post('eleve/getAbsences','EleveController@getAbsences');

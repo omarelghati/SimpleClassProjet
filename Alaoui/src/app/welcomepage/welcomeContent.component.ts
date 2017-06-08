@@ -2,54 +2,32 @@ import { Component, Input } from '@angular/core';
 import {AuthService} from '../auth.service';
 import {WelcomeService} from './welcome.service';
 import {WelcomeComponent} from './welcome.component';
-
  @Component({
      selector:'welcome-content',
      template:`<div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                           Bonjour <small>Mr {{parent}}</small>
-                        </h1>
-                        <ol class="breadcrumb">
-                            <li class="active">
-                                <i class="fa fa-dashboard" ></i>Dashboard
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>Pour information :</strong> vous pouvez consulter dans ce tableau de bord toutes les informations scolaires de vos enfants
-                        </div>
-                    </div>
-                </div>
+               
                 <!-- /.row -->
                 <!--dok l3ibat 4-->
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <div class="row"*ngFor="let note of notes">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-comments fa-5x"></i>
+                                <div class="row">
+                                     <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-4x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">{{note?.note}}<span>{{note?.nomMat}}!</span></div>
-                                        
+                                        <div>Notes</div>
+                                        <div class="huge">{{notes.length}}</div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
+                            <a (click)="onClickAbs()" >
+                                <div class="panel-footer" *ngFor="let note of notes">
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="pull-left">{{note?.note}}&nbsp;&nbsp;<span>{{note?.nomMat}}!</span></div>
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
@@ -104,18 +82,18 @@ import {WelcomeComponent} from './welcome.component';
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
-                                        <i class="fa fa-support fa-5x"></i>
+                                       <i class="fa fa-clock-o fa-fw"></i>
                                     </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">13</div>
-                                        <div>Support Tickets!</div>
+                                    <div class="col-xs-9 text-right"> 
+                                        <div class="huge">{{absences.length}}</div>
+                                        <div>Absences</div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <a>
+                                <div class="panel-footer" *ngFor="let absence of absences">
+                                    <span class="pull-left">{{absence.dateAbs}}</span>
+                                    <span class="pull-right"><i class="icon-calendar"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
@@ -143,7 +121,7 @@ import {WelcomeComponent} from './welcome.component';
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Donut Chart</h3>
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>Pourcentage des absences</h3>
                             </div>
                             <div class="panel-body">
                                 <div id="morris-donut-chart"></div>
@@ -156,7 +134,7 @@ import {WelcomeComponent} from './welcome.component';
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Tasks Panel</h3>
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>  Remarques des professeurs</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="list-group">
@@ -199,10 +177,10 @@ import {WelcomeComponent} from './welcome.component';
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> Transactions Panel</h3>
+                                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Liste detaillée des absences</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
@@ -281,11 +259,26 @@ import {WelcomeComponent} from './welcome.component';
  })
 export class WelcomeContent {
     @Input() notes;
+    @Input() eleve;
+    absences=[];
      parent: string;
-    eleves = [];    
     constructor(private _welcome:WelcomeComponent,private _service:AuthService,private _requestService : WelcomeService) {
         this.parent = WelcomeComponent.parent;
-        this.eleves=WelcomeComponent.eleves;
+       
     }
-    
-}
+    setAbsence(a) {
+        this.absences.push(a);
+    }
+    onClickAbs() {
+         this._requestService.getAbsences(this.eleve).subscribe(
+            response => {
+                 var absence = JSON.parse(response);
+                  var length = Object.keys(absence).length;
+                  for(var i=0;i<length;i++) {
+                    this.setAbsence(absence[i]); 
+                    console.log(absence[i])
+            }
+            error => console.log(error)}
+                );
+    }
+    }

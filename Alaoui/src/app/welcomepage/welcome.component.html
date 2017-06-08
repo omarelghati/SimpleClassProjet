@@ -124,7 +124,7 @@
                         <a href="javascript:;" data-toggle="collapse" #root [attr.data-target]="'#' + eleve?.id"><img src="../../assets/images/avatar2.png" width="30px"/> {{eleve?.nomcomplet}} <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul [id]="eleve?.id" class="collapse">
                             <li *ngFor="let item of items" >
-                                <a #child (click)="surpriseMotherfucker(child.innerText,root.innerText)">{{ item }}</a>
+                                <a #child (click)="selectedEleve=root.innerText;clicked=true;surprise(child.innerText,root.innerText);">{{ item }}</a>
                             </li>
                         </ul>
                     </li>
@@ -134,12 +134,35 @@
         </nav>
 
         <div id="page-wrapper">
+             <div class="row" >
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                           Bonjour <small>Mr {{getParent()}}</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-dashboard" ></i>Dashboard
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
 
-            <welcome-content [notes]="childNotes"></welcome-content>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Pour information :</strong> vous pouvez consulter dans ce tableau de bord toutes les informations scolaires de vos enfants
+                        </div>
+                    </div>
+                </div>
+            <welcome-content [notes]="childNotes" [eleve]="selectedEleve" *ngIf="clicked"></welcome-content>
             <!-- /.container-fluid -->
 
         </div>
         <!-- /#page-wrapper -->
         
     </div>
+    
+                
     

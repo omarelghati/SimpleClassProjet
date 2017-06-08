@@ -21,4 +21,11 @@ export class WelcomeService {
 							 (response:Response) => { return response.json();}
 							 );
 	}
+    getAbsences(eleve : string) {
+        return this.http.post(this.apiUrl+'eleve/getAbsences',{eleve:eleve},
+        {headers: new Headers({'X-Requested-With': 'XMLHttpRequest'})})
+						 .map(
+							 (response:Response) => { return response.json();}
+							 );
+    }
 }

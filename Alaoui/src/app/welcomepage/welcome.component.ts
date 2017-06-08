@@ -15,12 +15,15 @@ import {WelcomeContent} from './welcomeContent.component';
      items= ["Note","Remarque","Absence","EDT"];
      static parent:string;
      setted;
+     clicked=false;
      childNotes=[];
+     selectedEleve;
      constructor(private _service:AuthService,private _requestService : WelcomeService) {
        this._service.checkCredentials();
         WelcomeComponent.parent=this._service.user;
            this.setted = false;
-           this._requestService.getChildren(WelcomeComponent.parent).subscribe(
+           if(WelcomeComponent.eleves.length==0) {
+             this._requestService.getChildren(WelcomeComponent.parent).subscribe(
             response => {
                   var eleve = JSON.parse(response);
                   var length = Object.keys(eleve).length;
@@ -29,6 +32,7 @@ import {WelcomeContent} from './welcomeContent.component';
                   }  
             }
           ); 
+           }
      }
      getParent(){
        return WelcomeComponent.parent;
@@ -55,8 +59,10 @@ import {WelcomeContent} from './welcomeContent.component';
     $event.stopPropagation();
     this.status.isopen = !this.status.isopen;
   }
-  public surpriseMotherfucker(x,y) {
-    this._requestService.getNotes(y).subscribe(
+  public surprise(x,y) {
+      if(this.childNotes.length!=0) 
+       this.childNotes=[];
+        this._requestService.getNotes(y).subscribe(
   				response => {
             var note = JSON.parse(response);
                   var length = Object.keys(note).length;
