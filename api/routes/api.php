@@ -33,3 +33,5 @@ Route::post('notes/getNotes','MatiereController@getNotes');
 Route::post('parent/get','ParentController@geteleves');
 Route::post('users/getInformation','UserController@setInformation');
 Route::post('eleve/getAbsences','EleveController@getAbsences');
+Route::post('eleve/getRemarques','EleveController@getRemarques');
+Route::post('eleve/justifyAbs','AbsenceController@justifyAbs');

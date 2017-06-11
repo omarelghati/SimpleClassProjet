@@ -59,7 +59,7 @@ import {WelcomeContent} from './welcomeContent.component';
     $event.stopPropagation();
     this.status.isopen = !this.status.isopen;
   }
-  public surprise(x,y) {
+  public surprise(y) {
       if(this.childNotes.length!=0) 
        this.childNotes=[];
         this._requestService.getNotes(y).subscribe(

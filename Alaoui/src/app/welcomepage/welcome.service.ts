@@ -28,4 +28,19 @@ export class WelcomeService {
 							 (response:Response) => { return response.json();}
 							 );
     }
+    getRemarques(eleve) {
+        return this.http.post(this.apiUrl+'eleve/getRemarques',{eleve:eleve},
+         {headers: new Headers({'X-Requested-With': 'XMLHttpRequest'})})
+						 .map(
+							 (response:Response) => { return response.json();}
+							 );
+    }
+    justify(id){
+         return this.http.post(this.apiUrl+'eleve/justifyAbs',{id:id},
+         {headers: new Headers({'X-Requested-With': 'XMLHttpRequest'})})
+						 .map(
+							 (response:Response) => { return response.json();}
+							 );
+
+    }
 }

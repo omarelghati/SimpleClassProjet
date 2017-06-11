@@ -121,10 +121,10 @@
                         <a><i class="fa fa-fw fa-dashboard" (click)="showIt()"></i>Dashboard</a>
                     </li>
                     <li *ngFor="let eleve of getEleves()">
-                        <a href="javascript:;" data-toggle="collapse" #root [attr.data-target]="'#' + eleve?.id"><img src="../../assets/images/avatar2.png" width="30px"/> {{eleve?.nomcomplet}} <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:;" data-toggle="collapse" (click)="selectedEleve=root.innerText;clicked=true;surprise(root.innerText);"#root [attr.data-target]="'#' + eleve?.id"><img src="../../assets/images/avatar2.png" width="30px"/> {{eleve?.nomcomplet}} <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul [id]="eleve?.id" class="collapse">
                             <li *ngFor="let item of items" >
-                                <a #child (click)="selectedEleve=root.innerText;clicked=true;surprise(child.innerText,root.innerText);">{{ item }}</a>
+                                <a>{{ item }}</a>
                             </li>
                         </ul>
                     </li>

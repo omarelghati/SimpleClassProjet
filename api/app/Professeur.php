@@ -12,4 +12,5 @@ class Professeur extends Model
     public function postes(){
             return $this->hasMany('App\Poste');
         }
+
 }

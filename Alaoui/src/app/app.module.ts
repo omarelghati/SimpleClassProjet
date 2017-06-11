@@ -15,7 +15,7 @@ import { WelcomeContent } from './welcomepage/welcomeContent.component';
     SigninComponent,
     WelcomeComponent,
     WelcomeContent
-  ],
+      ],
   imports: [
     BrowserModule,
     FormsModule,
