@@ -22,21 +22,15 @@ class EleveController extends Controller
         return response()->json([json_encode($response)],200);
     }
 
-    // public function justifyAbs(Request $request){
-    //     $eleve = Eleve::where('nomcomplet',$request->eleve)->first();
-    //    $response=array_search("red",$eleve->absences);
-    //     return response()->json([json_encode($response)],200);
 
-
-    // }
 
     public function getRemarques(Request $request) {
-        date_default_timezone_set('Africa/Casablanca');
         $eleve = Eleve::where('nomcomplet',$request->eleve)->first();
         $response=array();
         foreach($eleve->professeurs as $prof) {
+            $tmp['nomProf']=$prof->nomcomplet;
             $date_expire =$prof->pivot->created_at;
-            $now = Carbon::now();
+            $now = Carbon::now()->timezone('Africa/Casablanca');
             $date = Carbon:: parse($date_expire);
             $difference= Carbon::createFromTimeStamp(strtotime($date))->diffForHumans();
             $tmp['time']=$difference;

@@ -113,52 +113,31 @@
                     </ul>
                 </li>
             </ul>
-        
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
-                        <a><i class="fa fa-fw fa-dashboard" (click)="showIt()"></i>Dashboard</a>
-                    </li>
                     <li *ngFor="let eleve of getEleves()">
-                        <a href="javascript:;" data-toggle="collapse" (click)="selectedEleve=root.innerText;clicked=true;surprise(root.innerText);"#root [attr.data-target]="'#' + eleve?.id"><img src="../../assets/images/avatar2.png" width="30px"/> {{eleve?.nomcomplet}} <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul [id]="eleve?.id" class="collapse">
-                            <li *ngFor="let item of items" >
-                                <a>{{ item }}</a>
-                            </li>
-                        </ul>
+                        <a (click)="clicked=!clicked;setEverything(root)" #root><img src="../../assets/images/avatar2.png" width="30px"/> {{ eleve?.nomcomplet }}</a>
                     </li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </nav>
-
         <div id="page-wrapper">
              <div class="row" >
                     <div class="col-lg-12">
                         <h1 class="page-header">
                            Bonjour <small>Mr {{getParent()}}</small>
                         </h1>
-                        <ol class="breadcrumb">
-                            <li class="active">
-                                <i class="fa fa-dashboard" ></i>Dashboard
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <div class="row">
-                    <div class="col-lg-12">
+                       <div class="row">
+                    <div class="col-lg-12 active">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <i class="fa fa-info-circle"></i>  <strong>Pour information :</strong> vous pouvez consulter dans ce tableau de bord toutes les informations scolaires de vos enfants
                         </div>
                     </div>
                 </div>
-            <welcome-content [notes]="childNotes" [eleve]="selectedEleve" *ngIf="clicked"></welcome-content>
-            <!-- /.container-fluid -->
-
+                    </div>
+                </div>
+            <welcome-content [notes]="childNotes" [absences]="absences" [remarques]="remarques" [eleve]="selectedEleve" *ngIf="clicked"></welcome-content>
         </div>
         <!-- /#page-wrapper -->
         

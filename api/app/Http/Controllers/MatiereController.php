@@ -19,6 +19,7 @@ class MatiereController extends Controller
             // $id=$matiere->pivot->matiere_id;
                 $tmp["nomMat"]=$matiere->nomMatiere;
             $tmp["note"] =$matiere->pivot->note;
+            $tmp["id"]=$matiere->id;
             $response[]=$tmp;
         }    
     return response()->json([json_encode($response)],200);

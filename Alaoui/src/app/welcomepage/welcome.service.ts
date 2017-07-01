@@ -35,8 +35,8 @@ export class WelcomeService {
 							 (response:Response) => { return response.json();}
 							 );
     }
-    justify(id){
-         return this.http.post(this.apiUrl+'eleve/justifyAbs',{id:id},
+    justify(id,justified){
+         return this.http.post(this.apiUrl+'eleve/justifyAbs',{id:id,justified:justified},
          {headers: new Headers({'X-Requested-With': 'XMLHttpRequest'})})
 						 .map(
 							 (response:Response) => { return response.json();}
