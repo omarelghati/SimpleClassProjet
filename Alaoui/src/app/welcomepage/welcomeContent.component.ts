@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import {AuthService} from '../auth.service';
 import {WelcomeService} from './welcome.service';
 import {WelcomeComponent} from './welcome.component';
+import {Popup} from './remarquePopup.component';
  @Component({
      selector:'welcome-content',
      templateUrl:'welcomeContent.component.html',
@@ -13,7 +14,12 @@ import {WelcomeComponent} from './welcome.component';
      } `]
  })
 export class WelcomeContent {
+    
     @Input() notes;
+    //for the popup
+    remarqueTitle:string;
+    remarqueContent:string;
+    static selectedRemarque:boolean=false;
     @Input() eleve:string;
     @Input() absences=[];
     justified:boolean[]=[false];
@@ -22,10 +28,14 @@ export class WelcomeContent {
     constructor(private _welcome:WelcomeComponent,private _service:AuthService,private _requestService : WelcomeService) {
         this.parent = WelcomeComponent.parent;     
     }
-  
     ngOnInit(){
     }
-     
+    setSelectedRemarque() {
+         WelcomeContent.selectedRemarque=!WelcomeContent.selectedRemarque;
+    }
+     getSelectedRemarque() {
+         return WelcomeContent.selectedRemarque;
+     }
     justify(a,b) {
         this.justified[a]=!this.justified[a];
         this._requestService.justify(a,b).subscribe(
@@ -34,5 +44,9 @@ export class WelcomeContent {
             },
             error => console.log(error)
                 );
+    }
+    setPop(a,b) {
+        this.remarqueTitle=a;
+        this.remarqueContent=b;
     }
     }

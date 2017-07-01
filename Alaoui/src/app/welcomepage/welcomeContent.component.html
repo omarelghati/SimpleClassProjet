@@ -1,0 +1,133 @@
+
+<div class="row">
+                    <div class="col-lg-12">
+                        <div class="jumbotron">
+                           <h2>Fiche de : <strong>{{eleve}}</strong></h2>
+                    </div>
+                </div>
+
+<div class="container-fluid">
+                <!--dok l3ibat 4-->
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-list fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{notes.length}}</div>
+                                        <div>Notes</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{remarques.length}}</div>
+                                        <div>Remarques</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-angellist fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{absences.length}}</div>
+                                        <div>Absences</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>id</th>
+                                                <th>Matiére</th>
+                                                <th>Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let note of notes">
+                                                <td>{{note?.id}}</td>
+                                                <td>{{note?.nomMat}}</td>
+                                                <td>{{note?.note}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>Pourcentage des absences</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="morris-donut-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>  Remarques des professeurs</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="list-group">
+                                    <div *ngFor="let remarque of remarques"  data-toggle="modal" data-target="#myModal" (click)="setSelectedRemarque();setPop(remarque.nomProf,remarque.remarque)" class="list-group-item">
+                                        <span class="badge">{{remarque?.time}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge">Pr.{{remarque?.nomProf}}</span>
+                                        <i class="fa fa-fw fa-calendar"></i>{{remarque?.remarque}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <popup *ngIf="getSelectedRemarque" [title]="remarqueTitle" [content]="remarqueContent"></popup>
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Liste detaillée des absences</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>N° d'absence</th>
+                                                <th>Date d'absence</th>
+                                                <th>Durée d'absence</th>
+                                                <th>justification</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let absence of absences">
+                                                <td>{{absence?.id}}</td>
+                                                <td>{{absence?.dateAbs}}</td>
+                                                <td>{{absence?.duree}}</td>
+                                                <td><i (click)="justify(absence?.id,absence?.justifie)" class="glyphicon glyphicon-ok" [ngClass]="{'done': absence?.justifie }"></i></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>

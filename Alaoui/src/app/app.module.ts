@@ -9,12 +9,14 @@ import { routing } from './app.routing';
 import { AuthService } from './auth.service';
 import { WelcomeComponent } from './welcomepage/welcome.component';
 import { WelcomeContent } from './welcomepage/welcomeContent.component';
+import { Popup } from './welcomepage/remarquePopup.component';
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
     WelcomeComponent,
-    WelcomeContent
+    WelcomeContent ,
+    Popup
       ],
   imports: [
     BrowserModule,
