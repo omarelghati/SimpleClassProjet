@@ -14,7 +14,7 @@ class CreateNiveausTable extends Migration
     public function up()
     {
         Schema::create('niveaus', function (Blueprint $table) {
-            $table->increments('idniveau');
+            $table->increments('id');
             $table->string('nomNiveau');
             $table->timestamps();
         });

@@ -14,15 +14,12 @@ class CreateElevesTable extends Migration
     public function up()
     {
         Schema::create('eleves', function (Blueprint $table) {
-            $table->increments('Ideleve');
-            $table->string('NomComplet');
+            $table->increments('id');
+            $table->string('nomcomplet');
             $table->Integer('age');
             $table->Integer('cne')->unique();
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->rememberToken();
-            // $table->Integer('idclasse');
-            // $table->Integer('idparent');s
+            $table->Integer('classe_id');
+            $table->Integer('parent_id');
             $table->timestamps();
         });
     }

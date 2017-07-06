@@ -16,10 +16,8 @@ Route::get('/', function () {
      {
          echo "prof : $prof<br/>";
          foreach($prof->classes as $classe) {
-             foreach($classe->eleves as $eleve) {
-                 echo $eleve->NomComplet."<br>";
+                 echo $classe."<br>";
              }
-         }
      }
 });
 

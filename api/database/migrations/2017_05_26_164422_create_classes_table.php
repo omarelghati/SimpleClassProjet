@@ -14,9 +14,10 @@ class CreateClassesTable extends Migration
     public function up()
     {
         Schema::create('classes', function (Blueprint $table) {
-            $table->increments('idclasse');
-            $table->integer('idprofesseur');
-            $$table->integer('idniveau');
+            $table->increments('id');
+            $table->string('nomclasse');
+            $table->integer('professeur_id');
+            $table->integer('niveau_id');
             $table->timestamps();
         });
     }

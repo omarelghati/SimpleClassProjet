@@ -8,17 +8,19 @@
                 <form id="login" class="login" #f="ngForm" (ngSubmit)="onSignin(f)">
                 <input name="username" type="text" placeholder="Username" ngModel/>
                 <input name="password" type="password" placeholder="Password" ngModel/>
-                <input type="submit" value="Sign In" class="btn btn-success btn-sm"  />
-                <div class="remember-forgot">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" />
-                                    Remember Me
-                                </label>
+                <div class="row">
+                    <br/>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select class="form-control" name="mode" ngModel>
+                                    <option  value="parent" selected>Parent</option>
+                                    <option  value="professeur">Professeur</option>
+                                </select>
+
                             </div>
                         </div>
+                <input type="submit" value="Sign In" class="btn btn-success btn-sm"  />
+                <div class="remember-forgot">
                         <div class="col-md-6 forgot-pass-content">
                         </div>
                     </div>

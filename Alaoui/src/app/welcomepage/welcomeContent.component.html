@@ -1,7 +1,6 @@
-
 <div class="row">
                     <div class="col-lg-12">
-                        <div class="jumbotron">
+                        <div class="jumbotron text-center">
                            <h2>Fiche de : <strong>{{eleve}}</strong></h2>
                     </div>
                 </div>
@@ -67,7 +66,7 @@
                                         <tbody>
                                             <tr *ngFor="let note of notes">
                                                 <td>{{note?.id}}</td>
-                                                <td>{{note?.nomMat}}</td>
+                                                <td>{{note?.matiere.nomMatiere}}</td>
                                                 <td>{{note?.note}}</td>
                                             </tr>
                                         </tbody>
@@ -75,11 +74,11 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
+                            <div class="panel-heading"(click)="setChart(absences?.length);loaded.value=!loaded.value">
                                 <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>Pourcentage des absences</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="morris-donut-chart"></div>
+                                <chart-parent [doughnutChartData]="chartData" [doughnutChartLabels]="labels" [chartColors]="chartColors" *ngIf="loaded.value" [loaded]="loaded"></chart-parent>
                             </div>
                         </div>
                     </div>
@@ -90,8 +89,8 @@
                             </div>
                             <div class="panel-body">
                                 <div class="list-group">
-                                    <div *ngFor="let remarque of remarques"  data-toggle="modal" data-target="#myModal" (click)="setSelectedRemarque();setPop(remarque.nomProf,remarque.remarque)" class="list-group-item">
-                                        <span class="badge">{{remarque?.time}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge">Pr.{{remarque?.nomProf}}</span>
+                                    <div *ngFor="let remarque of remarques"  data-toggle="modal" data-target="#myModal" (click)="setSelectedRemarque();setPop(remarque.professeur.nomcomplet,remarque.remarque)" class="list-group-item">
+                                        <span class="badge">{{remarque?.time}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge">Pr.{{remarque?.professeur.nomcomplet}}</span>
                                         <i class="fa fa-fw fa-calendar"></i>{{remarque?.remarque}}
                                     </div>
                                 </div>
@@ -111,15 +110,15 @@
                                             <tr>
                                                 <th>N° d'absence</th>
                                                 <th>Date d'absence</th>
-                                                <th>Durée d'absence</th>
+                                                <th>Matiére</th>
                                                 <th>justification</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let absence of absences">
+                                            <tr *ngFor="let absence of absences;let i=index">
                                                 <td>{{absence?.id}}</td>
-                                                <td>{{absence?.dateAbs}}</td>
-                                                <td>{{absence?.duree}}</td>
+                                                <td>{{absence?.dateabs}}</td>
+                                                <td>{{absence?.matiere.nomMatiere}}</td>
                                                 <td><i (click)="justify(absence?.id,absence?.justifie)" class="glyphicon glyphicon-ok" [ngClass]="{'done': absence?.justifie }"></i></td>
                                             </tr>
                                         </tbody>

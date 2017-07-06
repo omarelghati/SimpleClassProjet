@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBuletinsTable extends Migration
+class CreateAbsensesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateBuletinsTable extends Migration
      */
     public function up()
     {
-        Schema::create('buletins', function (Blueprint $table) {
-            $table->increments('idbuletin');
-            $table->integer('idetudiant');
-            $table->string('buletinFile');
+        Schema::create('absenses', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('matiere_id');
+            $table->date('dateabs');
+            $table->boolean('justifie');
+            $table->integer('eleve_id');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateBuletinsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('buletins');
+        Schema::dropIfExists('absenses');
     }
 }

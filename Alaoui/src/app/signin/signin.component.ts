@@ -9,18 +9,30 @@ import {Router} from '@angular/router';
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private authService: AuthService,private router:Router) { }
-
+  constructor(private authService: AuthService,private router:Router) { 
+    if(localStorage.getItem('tokenParent')) this.router.navigate(["/welcome"]);
+    if(localStorage.getItem('tokenProf')) this.router.navigate(["/prof"]);
+  }
   ngOnInit() {
+
   }
 
   onSignin(form: NgForm) {
-  	this.authService.signIn(form.value.username, form.value.password)
+  	if(form.value.mode=="parent"){
+      this.authService.signInParent(form.value.username, form.value.password)
   		.subscribe(
   				response => console.log(response),
   				error => console.log(error)
   			);
-        if(localStorage.getItem('token')) this.router.navigate(["/welcome"])
+        if(localStorage.getItem('tokenParent')) this.router.navigate(["/welcome"]);
+    } else if(form.value.mode=="professeur"){
+      this.authService.signInProf(form.value.username, form.value.password)
+  		.subscribe(
+  				response => console.log(response),
+  				error => console.log(error)
+  			);
+        if(localStorage.getItem('tokenProf')) this.router.navigate(["/prof"]);
+    }
   }
 
 }

@@ -28,10 +28,20 @@ Route::delete('quotes/{quote}', 'QuoteController@destroy')->middleware('jwt.auth
 
 
 Route::post('/users/signup', 'UserController@singup');
-Route::post('/users/signin', 'ParentController@signin');
+Route::post('/parent/signin', 'ParentController@signin');
+Route::post('/professeur/signin', 'ProfesseurController@signin');
 Route::post('notes/getNotes','MatiereController@getNotes');
-Route::post('parent/get','ParentController@geteleves');
+Route::post('parent/get','EleveController@geteleves');
 Route::post('users/getInformation','UserController@setInformation');
 Route::post('eleve/getAbsences','EleveController@getAbsences');
-Route::post('eleve/getRemarques','EleveController@getRemarques');
+Route::post('eleve/getRemarques','RemarqueController@getRemarques');
+Route::post('eleve/setRemarque','RemarqueController@setRemarque');
 Route::post('eleve/justifyAbs','AbsenceController@justifyAbs');
+Route::post('professeur/getClasses','ProfesseurController@getClasses');
+Route::post('classe/getEleves','EleveController@getElevesPerClass');
+Route::post('eleve/ajouter', 'EleveController@store');
+Route::post('parents/all', 'ParentController@getParents');
+Route::post('note/ajouterNote', 'NoteController@ajouterNote');
+Route::post('absence/ajouterabsence', 'AbsenceController@ajouterAbsence');
+Route::post('absence/getLastAbsents', 'AbsenceController@lastAbsents');
+Route::post('classe/getAbsperMonth', 'AbsenceController@absPerMonth');

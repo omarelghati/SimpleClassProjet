@@ -10,9 +10,9 @@ export class AuthService {
     constructor(private http : Http,private _router: Router){}
 	 private tmp;
 	 user;
-    signIn(username: string, password: string) {
+    signInParent(username: string, password: string) {
 		this.tmp = username;
-		return this.http.post(this.apiUrl + 'users/signin', 
+		return this.http.post(this.apiUrl + 'parent/signin', 
 			{username: username, password: password},
 			{headers: new Headers({'X-Requested-With': 'XMLHttpRequest'})})
 			.map(
@@ -22,18 +22,38 @@ export class AuthService {
 				)
 			.do(
 					tokenData => {
-						localStorage.setItem('token', tokenData.token);
-						// localStorage.setItem('Name', tokenData.username);
-						// AuthService.localUsername=localStorage.getItem('Name');
+						localStorage.setItem('tokenParent', tokenData.token);
+						localStorage.setItem('Name', username);
+					
 						this._router.navigate(['welcome']);
 					}
 				);
 	}
+    signInProf(username: string, password: string) {
+		this.tmp = username;
+		return this.http.post(this.apiUrl + 'professeur/signin', 
+			{username: username, password: password},
+			{headers: new Headers({'X-Requested-With': 'XMLHttpRequest'})})
+			.map(
+					(response: Response) => {
+						return response.json().token;
+					}
+				)
+			.do(
+					tokenData => {
+						localStorage.setItem('tokenProf', tokenData.token);
+						localStorage.setItem('Name', username);
+					
+						this._router.navigate(['prof']);
+					}
+				);
+	}
 	checkCredentials() {
-		if(localStorage.getItem("token") === null) {
+		if(localStorage["tokenProf"] == null && localStorage["tokenParent"]==null) {
 			this._router.navigate(['']);
-		}else {
-			this.user =this.tmp;
+		}
+		else {
+			this.user =localStorage['Name'];
 		}
 
 	}

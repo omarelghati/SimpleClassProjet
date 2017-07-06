@@ -14,10 +14,11 @@ class CreateProfesseursTable extends Migration
     public function up()
     {
         Schema::create('professeurs', function (Blueprint $table) {
-            $table->increments('idprofesseur');
+            $table->increments('id');
             $table->string('nomcomplet');
-            $table->integer('numero')->unsigned();
+            $table->string('numero');
             $table->string('email');
+            $table->Integer('matiere_id');
             $table->string('username');
             $table->string('password');
             $table->timestamps();

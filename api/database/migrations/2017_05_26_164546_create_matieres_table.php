@@ -14,10 +14,8 @@ class CreateMatieresTable extends Migration
     public function up()
     {
         Schema::create('matieres', function (Blueprint $table) {
-            $table->increments('idMatiere');
-            $table->string('nomcomplet');
+            $table->increments('id');
             $table->string('nomMatiere');
-            $table->integer('idclasse');
             $table->timestamps();
         });
     }

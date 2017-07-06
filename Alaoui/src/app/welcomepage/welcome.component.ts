@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {AuthService} from '../auth.service';
 import {WelcomeService} from './welcome.service';
 import {WelcomeContent} from './welcomeContent.component';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+
  @Component({
      selector:'welcome',
      templateUrl:'./welcome.component.html',
@@ -9,14 +11,16 @@ import {WelcomeContent} from './welcomeContent.component';
      providers:[WelcomeService]
  })
  export class WelcomeComponent { 
+      static labels=[];
+      static data =[];
    static eleves = [];
-     items= ["Note","Remarque","Absence","EDT"];
      static parent:string;
      setted;
      clicked=false;
-     childNotes=[];
-     remarques=[];
-     absences=[];
+     childNotes =[];
+     remarques =[];
+     absences =[];
+     matieres  =[];
      selectedEleve;
      constructor(private _service:AuthService,private _requestService : WelcomeService) {
        this._service.checkCredentials();
@@ -59,63 +63,84 @@ import {WelcomeContent} from './welcomeContent.component';
     $event.stopPropagation();
     this.status.isopen = !this.status.isopen;
   }
-  public surprise(y) {
+  public getNotes(y) {
       if(this.childNotes.length!=0) 
-       this.childNotes=[];
+        this.childNotes=[];
         this._requestService.getNotes(y).subscribe(
   				response => {
-            var note = JSON.parse(response);
-                  var length = Object.keys(note).length;
+            // var note = JSON.parse(response);
+                  var length = Object.keys(response).length;
                   for(var i=0;i<length;i++) {
-                    this.setNotes(note[i]); 
-                    console.log(note[i]);
+                    // console.log(response[i]);
+                    this.setNotes(response[i]); 
                     }
   				error => console.log(error)}
   			);
     }
     //la fonction qui prepare les données qui vont etre envoyés par injection de dep
     public setEverything(root) {
-    this.selectedEleve=root.innerText;this.clicked=true;
-    this.surprise(root.innerText);
-    if(this.remarques.length!=0) 
-       this.remarques=[];
-      if(this.absences.length!=0)
-      this.absences=[];
-    this.getRemarques();this.onClickAbs();
+      this.selectedEleve=root.innerText;this.clicked=true;
+      this.remarques= [];
+      this.absences= [];
+      this.getNotes(root.innerText);
+      this.getRemarques();
+      this.onClickAbs();
   
   }
 
-// absences et remarques :
- setAbsence(a) {
+    // absences et remarques :
+    setAbsence(a) {
         this.absences.push(a);
     }
     onClickAbs() {
+      if(this.absences.length!=0)
+        this.absences=[];
          this._requestService.getAbsences(this.selectedEleve).subscribe(
             response => {
                  var absence = JSON.parse(response);
                   var length = Object.keys(absence).length;
-                  for(var i=0;i<length;i++) {
-                    this.setAbsence(absence[i]); 
-                    console.log(absence[i].justifie);
-                    console.log(absence[i])
-            }
+                    WelcomeComponent.labels=new Array();
+                    WelcomeComponent.data=new Array();
+                    // this.setAbsence(absence[i]);
+                     for(var i=0;i<length;i++) {
+                       if(length)
+                        this.setLabels(absence[i].matiere.nomMatiere);
+                      this.absences.push(absence[i]);  
+                       }
             error => console.log(error)}
                 );
     }
-    
     getRemarques() {
-        this._requestService.getRemarques(this.selectedEleve).subscribe(
+      if(this.remarques.length!=0)
+        this.remarques=[];
+      this._requestService.getRemarques(this.selectedEleve).subscribe(
             response => {
-                 var remarque = JSON.parse(response);
+                 var remarque = response;
                   var length = Object.keys(remarque).length;
                   for(var i=0;i<length;i++) {
                     this.setRemarques(remarque[i]); 
-                    console.log(remarque[i])
+                    console.log(remarque[i]);
             }
             error => console.log(error)}
                 );
     }
     setRemarques(a){
         this.remarques.push(a);
+    }
+    setLabels(a) {
+         WelcomeComponent.labels.push(a);
+    }
+    getLabels() {
+      return WelcomeComponent.labels;
+    }
+
+     static setData() {
+      var obj = [];
+      for (var i = 0, j = WelcomeComponent.labels.length; i < j; i++) {
+        obj[i] = (obj[WelcomeComponent.labels[i]] || 0) + 1;
+        // console.log(WelcomeComponent.labels[i]);
+      }
+        WelcomeComponent.data=obj;
+        // console.log(WelcomeComponent.data);
     }
   }

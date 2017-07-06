@@ -12,20 +12,11 @@ class MatiereController extends Controller
    
     public function getNotes(Request $request){
 
-        $eleves = Eleve::where('nomcomplet',$request->eleve)->get()->first();
-        $response;
-        foreach($eleves->matieres as $matiere) {
-            $tmp =array();
-            // $id=$matiere->pivot->matiere_id;
-                $tmp["nomMat"]=$matiere->nomMatiere;
-            $tmp["note"] =$matiere->pivot->note;
-            $tmp["id"]=$matiere->id;
-            $response[]=$tmp;
-        }    
-    return response()->json([json_encode($response)],200);
+        $eleve= Eleve::where('nomcomplet',$request->eleve)->first();
+        $notes =  $eleve->notes;
+        foreach($notes as $note) {
+            $matiere = $note->matiere;
+        }
+    return response()->json($notes,200);
     }
-    //  public function checkOut(Request $request) {
-        // $note = \DB::table('notes')->where('eleve',$request->eleve)->first();
-        // return response()->json(['note' => $note->note],200);
-    //  }
 }

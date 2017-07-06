@@ -5,22 +5,13 @@ use Illuminate\Http\Request;
  use DB;
  use App\Parents;
  use App\Professeur;
-        use Tymon\JWTAuth\Exceptions\JWTException;
-        use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use JWTAuth;
 class ParentController extends Controller
 {
-    public function geteleves(Request $request) {
-
-    $parents= Parents::where('nomcomplet',$request->parent)->get();
-    $response=array();
-    // $profs = Professeur::all();
-    foreach($parents as $parent)
-     {
-        foreach($parent->eleves as $eleve) {
-                $response[]= $eleve;
-         }
-     }
-    return response()->json([json_encode($response)],200);
+    public function getParents(){
+        $parents = Parents::all();
+        return response()->json([json_encode($parents)],200);
     }
    public function getParent(Request $request)
     {
@@ -31,12 +22,17 @@ class ParentController extends Controller
 
     //signin
     public function signin(Request $request) {
+		// \Config::set('auth.providers.users.model', Parents::class);
+		// \Config::set('auth.providers.users.table', 'parents');
+
     	$this->validate($request, [
     			'username' => 'required',
     			'password' => 'required'
     		]);
-
-    	$credentials = $request->only('username', 'password');
+    	$credentials = [
+			"username" => request('username').'_pa',
+			"password" => request('password')
+		];
 
     	try{
     		if ( !$token = JWTAuth::attempt($credentials)) {

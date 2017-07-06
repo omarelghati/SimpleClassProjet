@@ -1,11 +1,10 @@
-      body
-      {   
-          background: url('https://static.pexels.com/photos/159844/cellular-education-classroom-159844.jpeg') fixed;
-        background-size: cover;
+body {
 
-        padding: 0;
-        margin: 0;
-      }
+          background: url('../images/backgroundTes.jpg') fixed;
+          /* https://static.pexels.com/photos/159844/cellular-education-classroom-159844.jpeg */
+        background-size: cover;
+}
+
 .wrap
 {
     width: 100%;

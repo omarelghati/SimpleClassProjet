@@ -15,6 +15,9 @@ class CreateRemarquesTable extends Migration
     {
         Schema::create('remarques', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('professeur_id');
+            $table->integer('eleve_id');
+            $table->string('remarque');
             $table->timestamps();
         });
     }

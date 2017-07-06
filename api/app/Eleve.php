@@ -11,9 +11,17 @@ class Eleve extends Model{
         return $this->belongsToMany("App\Matiere")->withPivot('note');
     }
     public function absences(){
-        return $this->hasMany("App\Absence");
+        return $this->hasMany("App\Absense");
     }
     public function professeurs() {
         return $this->belongsToMany('App\Professeur')->withPivot('remarque')->withPivot('created_at');
+    }
+
+    public function remarques() {
+        return $this->hasMany('App\Remarque');
+    }
+
+    public function notes() {
+        return $this->hasMany('App\Note');
     }
 }
